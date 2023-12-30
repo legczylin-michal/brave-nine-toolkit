@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Soul Gear Summon Simulation{% endblock %}
+
+{% block content %}
+	<div class="panel centered white">
+		<div class="value jc-space-evenly p-2">
+			<form action="{{ path('rune_simulation') }}" method="get" id="input-data" class="unicorn-form d-flex fd-column w-fit-content">
+				<!-- type, rank, rarity and level selection -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>type</th>
+
+						<th>rank</th>
+
+						<th>rarity</th>
+
+						<th>level</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<select name="type">
+								<option value="{{ constant('App\\Enum\\Rune\\Type::ASSAULT_FIXED').value }}" {% if default.type is same as(constant('App\\Enum\\Rune\\Type::ASSAULT_FIXED')) %}selected{% endif %}>
+									Assault Fixed
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Type::ASSAULT_PERCENT').value }}" {% if default.type is same as(constant('App\\Enum\\Rune\\Type::ASSAULT_PERCENT')) %}selected{% endif %}>
+									Assault Percent
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Type::VITAL_FIXED').value }}" {% if default.type is same as(constant('App\\Enum\\Rune\\Type::VITAL_FIXED')) %}selected{% endif %}>
+									Vital Fixed
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Type::VITAL_PERCENT').value }}" {% if default.type is same as(constant('App\\Enum\\Rune\\Type::VITAL_PERCENT')) %}selected{% endif %}>
+									Vital Percent
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Type::SHIELD').value }}" {% if default.type is same as(constant('App\\Enum\\Rune\\Type::SHIELD')) %}selected{% endif %}>
+									Shield
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Type::FATAL').value }}" {% if default.type is same as(constant('App\\Enum\\Rune\\Type::FATAL')) %}selected{% endif %}>
+									Fatal
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Type::RAGE').value }}" {% if default.type is same as(constant('App\\Enum\\Rune\\Type::RAGE')) %}selected{% endif %}>
+									Rage
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="rank">
+								<option value="{{ constant('App\\Enum\\Rune\\Rank::STAR_1').value }}" {% if default.rank is same as(constant('App\\Enum\\Rune\\Rank::STAR_1')) %}selected{% endif %}>
+									1
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Rank::STAR_2').value }}" {% if default.rank is same as(constant('App\\Enum\\Rune\\Rank::STAR_2')) %}selected{% endif %}>
+									2
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Rank::STAR_3').value }}" {% if default.rank is same as(constant('App\\Enum\\Rune\\Rank::STAR_3')) %}selected{% endif %}>
+									3
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Rank::STAR_4').value }}" {% if default.rank is same as(constant('App\\Enum\\Rune\\Rank::STAR_4')) %}selected{% endif %}>
+									4
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Rank::STAR_5').value }}" {% if default.rank is same as(constant('App\\Enum\\Rune\\Rank::STAR_5')) %}selected{% endif %}>
+									5
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Rank::STAR_6').value }}" {% if default.rank is same as(constant('App\\Enum\\Rune\\Rank::STAR_6')) %}selected{% endif %}>
+									6
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="rarity">
+								<option value="{{ constant('App\\Enum\\Rune\\Rarity::COMMON').value }}" {% if default.rarity is same as(constant('App\\Enum\\Rune\\Rarity::COMMON')) %}selected{% endif %}>
+									Common
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Rarity::RARE').value }}" {% if default.rarity is same as(constant('App\\Enum\\Rune\\Rarity::RARE')) %}selected{% endif %}>
+									Rare
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Rarity::EPIC').value }}" {% if default.rarity is same as(constant('App\\Enum\\Rune\\Rarity::EPIC')) %}selected{% endif %}>
+									Epic
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\Rarity::LEGEND').value }}" {% if default.rarity is same as(constant('App\\Enum\\Rune\\Rarity::LEGEND')) %}selected{% endif %}>
+									Legend
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="level" id="level">
+								{% for i in 0..9 %}
+									<option value="{{ i }}" {% if i is same as(default.level) %}selected{% endif %}>{{ i }}</option>
+								{% endfor %}
+							</select>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- growth attributes selection based on level -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>1<sup>st</sup> growth rank</th>
+
+						<th>2<sup>nd</sup> growth rank</th>
+
+						<th>3<sup>rd</sup> growth rank</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<select name="fst_growth_rank" id="fst-growth-rank">
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::C').value }}" {% if default.fst_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::C')) %}selected{% endif %}>
+									C
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::B').value }}" {% if default.fst_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::B')) %}selected{% endif %}>
+									B
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::A').value }}" {% if default.fst_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::A')) %}selected{% endif %}>
+									A
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::S').value }}" {% if default.fst_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::S')) %}selected{% endif %}>
+									S
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="snd_growth_rank" id="snd-growth-rank">
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::C').value }}" {% if default.snd_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::C')) %}selected{% endif %}>
+									C
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::B').value }}" {% if default.snd_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::B')) %}selected{% endif %}>
+									B
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::A').value }}" {% if default.snd_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::A')) %}selected{% endif %}>
+									A
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::S').value }}" {% if default.snd_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::S')) %}selected{% endif %}>
+									S
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="thr_growth_rank" id="thr-growth-rank">
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::C').value }}" {% if default.thr_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::C')) %}selected{% endif %}>
+									C
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::B').value }}" {% if default.thr_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::B')) %}selected{% endif %}>
+									B
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::A').value }}" {% if default.thr_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::A')) %}selected{% endif %}>
+									A
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::S').value }}" {% if default.thr_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::S')) %}selected{% endif %}>
+									S
+								</option>
+							</select>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- submission -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>
+							<a href="{{ path('rune_simulation') }}" class="btn">Reset</a>
+						</th>
+
+						<th>
+							<input type="submit" value="Calculate" class="btn">
+						</th>
+					</tr>
+					</thead>
+				</table>
+
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>Result</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							{{ result }}
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+{% endblock %}

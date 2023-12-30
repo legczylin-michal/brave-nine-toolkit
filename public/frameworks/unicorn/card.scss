@@ -1,0 +1,44 @@
+@use 'sass:math';
+
+$width: 600px;
+$height: math.div($width * 2, 1 + math.sqrt(5));
+
+.card {
+    display: flex;
+    align-items: center;
+
+    > .text {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        > .title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            line-height: normal;
+        }
+
+        > .description {
+            text-align: left;
+            font-size: 1.1rem;
+
+            &.right {
+                text-align: right;
+            }
+        }
+    }
+
+    > .illustration {
+        > img {
+            width: $width;
+            height: $height;
+            object-fit: cover;
+        }
+    }
+
+    & > *:first-child {
+        margin-right: 35px;
+    }
+}

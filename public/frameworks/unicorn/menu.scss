@@ -1,0 +1,53 @@
+.menu {
+    display: flex;
+
+    >.m-item {
+        position: relative;
+
+        >.m-i-name {
+            display: block;
+
+            font-size: 1.5rem;
+            padding: 20px;
+            text-transform: uppercase;
+
+            &:hover {
+                color: white;
+            }
+        }
+
+        >.m-i-dropdown {
+            display: none;
+
+            position: absolute;
+            top: 100%;
+            left: 0;
+
+            min-width: 100%;
+            width: fit-content;
+
+            >.m-i-d-item {
+                display: block;
+
+                font-size: 0.9rem;
+                padding: 10px;
+
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+
+        &:hover>.m-i-dropdown {
+            display: block;
+        }
+    }
+
+    &.dark {
+        color: rgb(192, 192, 192);
+
+        .m-i-dropdown {
+            background-color: rgb(51, 51, 51);
+        }
+    }
+}

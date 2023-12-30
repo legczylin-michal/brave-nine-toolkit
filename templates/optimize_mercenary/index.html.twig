@@ -1,0 +1,860 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Optimize Mercenary{% endblock %}
+
+{% block styles %}{% endblock %}
+
+{% block content %}
+	<div class="panel centered white">
+		<div class="value jc-space-evenly p-2">
+			<form action="{{ path('optimize_mercenary') }}" method="get" id="input-data" class="unicorn-form d-flex fd-column w-fit-content">
+				<!-- optimized stat and base value selection -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th colspan="2">optimized stat</th>
+
+						<th>base value</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<label class="unicorn-label">
+								<input type="radio" name="optimized_stat" value="{{ constant('App\\Enum\\StatType::ATK').value }}"
+									   {% if default.optimized_stat == constant('App\\Enum\\StatType::ATK') %}checked{% endif %}>
+
+								<span class="btn">ATK</span>
+							</label>
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="radio" name="optimized_stat" value="{{ constant('App\\Enum\\StatType::HP').value }}"
+									   {% if default.optimized_stat == constant('App\\Enum\\StatType::HP') %}checked{% endif %}>
+
+								<span class="btn">HP</span>
+							</label>
+						</td>
+
+						<td>
+							<input type="text" name="base_value" value="{{ default.base_value }}">
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- fixed and percent rune examples -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>fixed rune</th>
+
+						<th>percent rune</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<input type="text" name="rune_fixed" value="{{ default.rune_fixed }}">
+						</td>
+
+						<td>
+							<input type="text" name="rune_percent" value="{{ default.rune_percent }}">
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- mythic rune fixed both halves examples -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>m. rune 1<sup>st</sup> half fixed</th>
+
+						<th>m. rune 2<sup>nd</sup> half fixed</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<input type="text" name="mythic_rune_first_half_fixed" value="{{ default.mythic_rune_first_half_fixed }}">
+						</td>
+
+						<td>
+							<input type="text" name="mythic_rune_second_half_fixed" value="{{ default.mythic_rune_second_half_fixed }}">
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- mythic rune percent both halves examples -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>m. rune 1<sup>st</sup> half percent</th>
+
+						<th>m. rune 2<sup>nd</sup> half percent</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<input type="text" name="mythic_rune_first_half_percent" value="{{ default.mythic_rune_first_half_percent }}">
+						</td>
+
+						<td>
+							<input type="text" name="mythic_rune_second_half_percent" value="{{ default.mythic_rune_second_half_percent }}">
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- runes' availability -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>rune 1</th>
+
+						<th>rune 2</th>
+
+						<th>m. rune 1<sup>st</sup> half</th>
+
+						<th>m. rune 2<sup>nd</sup> half</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="rune_one_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="rune_one_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.rune_one_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="rune_two_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="rune_two_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.rune_two_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="mythic_rune_first_half_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="mythic_rune_first_half_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.mythic_rune_first_half_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="mythic_rune_second_half_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="mythic_rune_second_half_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.mythic_rune_second_half_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- runes' options availability -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>rune 1 option</th>
+
+						<th>rune 2 option</th>
+
+						<th>m. rune option</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="rune_one_option_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="rune_one_option_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.rune_one_option_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="rune_two_option_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="rune_two_option_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.rune_two_option_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="mythic_rune_option_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="mythic_rune_option_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.mythic_rune_option_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- non-amulet and amulet enhancement levels and their availabililty -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>non-amulet</th>
+
+						<th>amulet</th>
+
+						<th>amulet 1<sup>st</sup> half</th>
+
+						<th>amulet 2<sup>nd</sup> half</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<select name="non_amulet_enhancement_level">
+								{% for i in 0..25 %}
+									<option value="{{ i }}" {% if i==default.non_amulet_enhancement_level %}selected{% endif %}>{{ i }}</option>
+								{% endfor %}
+							</select>
+							level
+						</td>
+
+						<td>
+							<select name="amulet_enhancement_level">
+								{% for i in 0..25 %}
+									<option value="{{ i }}" {% if i==default.amulet_enhancement_level %}selected{% endif %}>{{ i }}</option>
+								{% endfor %}
+							</select>
+							level
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="amulet_first_half_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="amulet_first_half_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.amulet_first_half_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="hidden" name="amulet_second_half_availability" value="{{ constant('App\\Enum\\Available::FALSE').value }}">
+								<input type="checkbox" name="amulet_second_half_availability" value="{{ constant('App\\Enum\\Available::TRUE').value }}"
+									   {% if default.amulet_second_half_availability is same as(constant('App\\Enum\\Available::TRUE')) %}checked{% endif %}>
+
+								<span class="btn">Available</span>
+							</label>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- insignia settings -->
+				<!--<table class="table table-center">
+                    <thead>
+                    <tr>
+                        <th colspan="5">insignia of the creed highest placeable tier</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label class="unicorn-label">
+                                <input type="radio" name="insignia_rank"
+                                       value="{{ constant('App\\Enum\\MercenaryRank::LEGEND').value }}"
+                                       {% if default.insignia_rank is same as(constant('App\\Enum\\MercenaryRank::LEGEND')) %}checked{% endif %}>
+
+                                <span class="btn">Legendary</span>
+                            </label>
+                        </td>
+
+                        <td>
+                            <label class="unicorn-label">
+                                <input type="radio" name="insignia_rank"
+                                       value="{{ constant('App\\Enum\\MercenaryRank::STAR_5').value }}"
+                                       {% if default.insignia_rank is same as(constant('App\\Enum\\MercenaryRank::STAR_5')) %}checked{% endif %}>
+
+                                <span class="btn">5-star</span>
+                            </label>
+                        </td>
+
+                        <td>
+                            <label class="unicorn-label">
+                                <input type="radio" name="insignia_rank"
+                                       value="{{ constant('App\\Enum\\MercenaryRank::STAR_4').value }}"
+                                       {% if default.insignia_rank is same as(constant('App\\Enum\\MercenaryRank::STAR_4')) %}checked{% endif %}>
+
+                                <span class="btn">4-star</span>
+                            </label>
+                        </td>
+
+                        <td>
+                            <label class="unicorn-label">
+                                <input type="radio" name="insignia_rank"
+                                       value="{{ constant('App\\Enum\\MercenaryRank::STAR_3').value }}"
+                                       {% if default.insignia_rank is same as(constant('App\\Enum\\MercenaryRank::STAR_3')) %}checked{% endif %}>
+
+                                <span class="btn">3-star</span>
+                            </label>
+                        </td>
+
+                        <td>
+                            <label class="unicorn-label">
+                                <input type="radio" name="insignia_rank"
+                                       value="{{ constant('App\\Enum\\MercenaryRank::LOWER').value }}"
+                                       {% if default.insignia_rank is same as(constant('App\\Enum\\MercenaryRank::LOWER')) %}checked{% endif %}>
+
+                                <span class="btn">not placed</span>
+                            </label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>-->
+
+				<!-- set effect and mythic mercenary stat bonus -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>set effect</th>
+
+						<th colspan="2">mythic mercenary bonus</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<select name="set_effect_activation_level">
+								{% for i in 0..5 %}
+									<option value="{{ i }}" {% if i==default.set_effect_activation_level %}selected{% endif %}>{{ i }}</option>
+								{% endfor %}
+							</select>
+
+							level
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="radio" name="mythic_mercenary_bonus" value="{{ constant('App\\Enum\\MythicMercenaryBonus::INACTIVE').value }}"
+									   {% if default.mythic_mercenary_bonus is same as(constant('App\\Enum\\MythicMercenaryBonus::INACTIVE')) %}checked{% endif %}>
+
+								<span class="btn">Inactive</span>
+							</label>
+						</td>
+
+						<td>
+							<label class="unicorn-label">
+								<input type="radio" name="mythic_mercenary_bonus" value="{{ constant('App\\Enum\\MythicMercenaryBonus::ACTIVE').value }}"
+									   {% if default.mythic_mercenary_bonus is same as(constant('App\\Enum\\MythicMercenaryBonus::ACTIVE')) %}checked{% endif %}>
+
+								<span class="btn">Active</span>
+							</label>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- submission -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>
+							<a href="{{ path('optimize_mercenary') }}" class="btn">Reset</a>
+						</th>
+
+						<th>
+							<input type="submit" value="Calculate" class="btn">
+						</th>
+					</tr>
+					</thead>
+				</table>
+			</form>
+
+			<!-- predefined runes' values -->
+			<div class="d-flex fd-column">
+				<!-- fixed assault and vital -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th colspan="2">fixed</th>
+
+						<th>BBB</th>
+
+						<th>BBS</th>
+
+						<th>SBS</th>
+
+						<th>SSS</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td rowspan="3">assault</td>
+
+						<td>Rare</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="412">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="520">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="556">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="628">Use!</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Epic</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="438">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="552">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="590">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="666">Use!</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Legend</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="464">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="584">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="624">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="704">Use!</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td rowspan="3">vital</td>
+
+						<td>Rare</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="1648">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2080">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2224">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2512">Use!</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Epic</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="1752">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2208">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2360">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2664">Use!</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Legend</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="1856">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2336">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2496">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_fixed" data-value="2816">Use!</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- percent (both assault and vital are the same) -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>percent</th>
+
+						<th>BBB</th>
+
+						<th>BBS</th>
+
+						<th>SBS</th>
+
+						<th>SSS</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>Rare</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="38.2">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="43.6">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="45.4">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="49">Use!</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Epic</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="44.52">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="51.36">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="53.64">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="58.2">Use!</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Legend</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="50.84">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="59.12">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="61.88">Use!</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="rune_percent" data-value="67.4">Use!</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- mythic 1st half fixed (assault and vital) and percent -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th colspan="2">m. 1st half</th>
+
+						<th>+0</th>
+
+						<th>+3</th>
+
+						<th>+6</th>
+
+						<th>+9</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td rowspan="2">fixed</td>
+
+						<td>assault</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_fixed" data-value="56">Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_fixed" data-value="96">Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_fixed" data-value="156">Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_fixed" data-value="296">Use!
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>vital</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_fixed" data-value="218">Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_fixed" data-value="386">Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_fixed" data-value="638">Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_fixed" data-value="1226">
+								Use!
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2">percent</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_percent" data-value="13.39">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_percent" data-value="16.27">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_percent" data-value="20.59">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_first_half_percent" data-value="30.67">
+								Use!
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- mythic 2nd half fixed (assault and vital) and percent -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th colspan="2">m. 2nd half</th>
+
+						<th>+0</th>
+
+						<th>+3</th>
+
+						<th>+6</th>
+
+						<th>+9</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td rowspan="2">fixed</td>
+
+						<td>assault</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_fixed" data-value="52">Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_fixed" data-value="92">Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_fixed" data-value="152">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_fixed" data-value="292">
+								Use!
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>vital</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_fixed" data-value="208">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_fixed" data-value="368">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_fixed" data-value="608">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_fixed" data-value="1168">
+								Use!
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2">percent</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_percent" data-value="13">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_percent" data-value="15.8">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_percent" data-value="20">
+								Use!
+							</div>
+						</td>
+
+						<td>
+							<div class="btn btn-white" data-target="mythic_rune_second_half_percent" data-value="29.8">
+								Use!
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!-- rendering results -->
+	<div class="panel centered black p-2">
+		<table class="table table-center sticky-head" data-row-ids="true">
+			<thead>
+			<tr data-row-id="№">
+				{% for key, cell in table[0] %}
+					<th>
+						{{ key }}
+					</th>
+				{% endfor %}
+			</tr>
+			</thead>
+
+			<tbody>
+			{% for row_id in 0..(table|length - 1) %}
+				<tr data-row-id="{{ row_id + 1 }}">
+					{% for cell in table[row_id] %}
+						<td>
+							{{ cell }}
+						</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ asset('scripts/optimize_mercenary.js') }}?random_id={{ random_id }}"></script>
+{% endblock %}

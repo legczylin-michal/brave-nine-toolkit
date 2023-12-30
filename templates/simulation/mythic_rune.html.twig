@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mythic Rune Simulation{% endblock %}
+
+{% block content %}
+	<div class="panel centered white">
+		<div class="value jc-space-evenly p-2">
+			<form action="{{ path('mythic_rune_simulation') }}" method="get" id="input-data" class="unicorn-form d-flex fd-column w-fit-content">
+				<!-- type, rank, rarity and level selection -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>1<sup>st</sup> half type</th>
+
+						<th>2<sup>nd</sup> half type</th>
+
+						<th>level</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<select name="type_one">
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::ASSAULT_FIXED').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::ASSAULT_FIXED')) %}selected{% endif %}>
+									Assault Fixed
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::ASSAULT_PERCENT').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::ASSAULT_PERCENT')) %}selected{% endif %}>
+									Assault Percent
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::VITAL_FIXED').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::VITAL_FIXED')) %}selected{% endif %}>
+									Vital Fixed
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::VITAL_PERCENT').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::VITAL_PERCENT')) %}selected{% endif %}>
+									Vital Percent
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::SHIELD').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::SHIELD')) %}selected{% endif %}>
+									Shield
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::FATAL').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::FATAL')) %}selected{% endif %}>
+									Fatal
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::RAGE').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::RAGE')) %}selected{% endif %}>
+									Rage
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::AGILITY').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::AGILITY')) %}selected{% endif %}>
+									Agility
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::ENDURANCE').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::ENDURANCE')) %}selected{% endif %}>
+									Endurance
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::PENETRATION').value }}" {% if default.type_one is same as(constant('App\\Enum\\Rune\\MythicType::PENETRATION')) %}selected{% endif %}>
+									Penetration
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="type_two">
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::ASSAULT_FIXED').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::ASSAULT_FIXED')) %}selected{% endif %}>
+									Assault Fixed
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::ASSAULT_PERCENT').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::ASSAULT_PERCENT')) %}selected{% endif %}>
+									Assault Percent
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::VITAL_FIXED').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::VITAL_FIXED')) %}selected{% endif %}>
+									Vital Fixed
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::VITAL_PERCENT').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::VITAL_PERCENT')) %}selected{% endif %}>
+									Vital Percent
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::SHIELD').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::SHIELD')) %}selected{% endif %}>
+									Shield
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::FATAL').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::FATAL')) %}selected{% endif %}>
+									Fatal
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::RAGE').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::RAGE')) %}selected{% endif %}>
+									Rage
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::AGILITY').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::AGILITY')) %}selected{% endif %}>
+									Agility
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::ENDURANCE').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::ENDURANCE')) %}selected{% endif %}>
+									Endurance
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\MythicType::PENETRATION').value }}" {% if default.type_two is same as(constant('App\\Enum\\Rune\\MythicType::PENETRATION')) %}selected{% endif %}>
+									Penetration
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="level" id="level">
+								{% for i in 0..9 %}
+									<option value="{{ i }}" {% if i is same as(default.level) %}selected{% endif %}>{{ i }}</option>
+								{% endfor %}
+							</select>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- growth attributes selection based on level -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>1<sup>st</sup> growth rank</th>
+
+						<th>2<sup>nd</sup> growth rank</th>
+
+						<th>3<sup>rd</sup> growth rank</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>
+							<select name="fst_growth_rank" id="fst-growth-rank">
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::C').value }}" {% if default.fst_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::C')) %}selected{% endif %}>
+									C
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::B').value }}" {% if default.fst_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::B')) %}selected{% endif %}>
+									B
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::A').value }}" {% if default.fst_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::A')) %}selected{% endif %}>
+									A
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::S').value }}" {% if default.fst_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::S')) %}selected{% endif %}>
+									S
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="snd_growth_rank" id="snd-growth-rank">
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::C').value }}" {% if default.snd_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::C')) %}selected{% endif %}>
+									C
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::B').value }}" {% if default.snd_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::B')) %}selected{% endif %}>
+									B
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::A').value }}" {% if default.snd_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::A')) %}selected{% endif %}>
+									A
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::S').value }}" {% if default.snd_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::S')) %}selected{% endif %}>
+									S
+								</option>
+							</select>
+						</td>
+
+						<td>
+							<select name="thr_growth_rank" id="thr-growth-rank">
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::C').value }}" {% if default.thr_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::C')) %}selected{% endif %}>
+									C
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::B').value }}" {% if default.thr_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::B')) %}selected{% endif %}>
+									B
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::A').value }}" {% if default.thr_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::A')) %}selected{% endif %}>
+									A
+								</option>
+								<option value="{{ constant('App\\Enum\\Rune\\GrowthRank::S').value }}" {% if default.thr_growth_rank is same as(constant('App\\Enum\\Rune\\GrowthRank::S')) %}selected{% endif %}>
+									S
+								</option>
+							</select>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- submission -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th>
+							<a href="{{ path('mythic_rune_simulation') }}" class="btn">Reset</a>
+						</th>
+
+						<th>
+							<input type="submit" value="Calculate" class="btn">
+						</th>
+					</tr>
+					</thead>
+				</table>
+
+				<!-- result -->
+				<table class="table table-center">
+					<thead>
+					<tr>
+						<th colspan="2">Result</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>1<sup>st</sup> half</td>
+
+						<td>2<sup>nd</sup> half</td>
+					</tr>
+
+					<tr>
+						<td>
+							{{ result.fst }}
+						</td>
+
+						<td>
+							{{ result.snd }}
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ asset('scripts/rune_simulation.js') }}?random_id={{ random_id }}"></script>
+{% endblock %}

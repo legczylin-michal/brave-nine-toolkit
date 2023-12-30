@@ -1,0 +1,27 @@
+.panel {
+    &.white {
+        background-color: white;
+        color: black;
+    }
+
+    &.gray {
+        background-color: rgb(224, 224, 224);
+        color: black;
+    }
+
+    &.black {
+        background-color: rgb(70, 70, 70);
+        color: white;
+    }
+
+    &.centered {
+        display: flex;
+        justify-content: center;
+
+        >.value {
+            display: flex;
+
+            width: 1200px;
+        }
+    }
+}

@@ -1,0 +1,206 @@
+.btn {
+  display: inline-block;
+  padding: 5px;
+  border-radius: 5px;
+}
+.btn:hover {
+  cursor: pointer;
+}
+.btn.btn-white {
+  background-color: white;
+  color: black;
+}
+
+.menu {
+  display: flex;
+}
+.menu > .m-item {
+  position: relative;
+}
+.menu > .m-item > .m-i-name {
+  display: block;
+  font-size: 1.5rem;
+  padding: 20px;
+  text-transform: uppercase;
+}
+.menu > .m-item > .m-i-name:hover {
+  color: white;
+}
+.menu > .m-item > .m-i-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  width: fit-content;
+}
+.menu > .m-item > .m-i-dropdown > .m-i-d-item {
+  display: block;
+  font-size: 0.9rem;
+  padding: 10px;
+}
+.menu > .m-item > .m-i-dropdown > .m-i-d-item:hover {
+  color: white;
+}
+.menu > .m-item:hover > .m-i-dropdown {
+  display: block;
+}
+.menu.dark {
+  color: rgb(192, 192, 192);
+}
+.menu.dark .m-i-dropdown {
+  background-color: rgb(51, 51, 51);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+}
+.card > .text {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.card > .text > .title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 35px;
+  text-transform: uppercase;
+  line-height: normal;
+}
+.card > .text > .description {
+  text-align: left;
+  font-size: 1.1rem;
+}
+.card > .text > .description.right {
+  text-align: right;
+}
+.card > .illustration > img {
+  width: 600px;
+  height: 370.8203932499px;
+  object-fit: cover;
+}
+.card > *:first-child {
+  margin-right: 35px;
+}
+
+.panel.white {
+  background-color: white;
+  color: black;
+}
+.panel.gray {
+  background-color: rgb(224, 224, 224);
+  color: black;
+}
+.panel.black {
+  background-color: rgb(70, 70, 70);
+  color: white;
+}
+.panel.centered {
+  display: flex;
+  justify-content: center;
+}
+.panel.centered > .value {
+  display: flex;
+  width: 1200px;
+}
+
+.link {
+  display: inline-block;
+  padding: 0 2px;
+  text-decoration: underline;
+  font-weight: bolder;
+}
+.link:hover {
+  cursor: pointer;
+  color: rgb(105, 105, 228);
+}
+
+table.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+}
+table.table[data-row-ids=true] > thead > tr::before, table.table[data-row-ids=true] > tbody > tr::before {
+  content: attr(data-row-id);
+  display: table-cell;
+}
+table.table > thead > tr {
+  background-color: rgb(46, 51, 50);
+  color: white;
+}
+table.table > tbody > tr {
+  background-color: rgb(191, 191, 191);
+}
+table.table > tbody > tr:nth-child(even) {
+  background-color: rgb(128, 128, 128);
+}
+table.table > thead > tr > th,
+table.table > thead > tr::before,
+table.table > tbody > tr > td,
+table.table > tbody > tr::before {
+  padding: 10px;
+  border-bottom: 1px solid black;
+  font-size: 1rem;
+}
+table.table.table-center > thead > tr > th,
+table.table.table-center > thead > tr::before,
+table.table.table-center > tbody > tr > td,
+table.table.table-center > tbody > tr::before {
+  text-align: center;
+}
+table.table.sticky-head > thead {
+  position: sticky;
+  top: 80px;
+}
+table.table:last-child {
+  margin-bottom: 0;
+}
+
+form.unicorn-form label.unicorn-label > input[type=radio],
+form.unicorn-form label.unicorn-label > input[type=checkbox] {
+  display: none;
+}
+form.unicorn-form label.unicorn-label > input[type=radio]:checked + span,
+form.unicorn-form label.unicorn-label > input[type=checkbox]:checked + span {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+form.unicorn-form input[type=text] {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.fd-column {
+  flex-direction: column;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+.jc-space-evenly {
+  justify-content: space-evenly;
+}
+
+.w-fit-content {
+  width: fit-content;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.p-2 {
+  padding: 2rem;
+}
+
+.p-3 {
+  padding: 3rem;
+}
+
+/*# sourceMappingURL=unicorn.css.map */

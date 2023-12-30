@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/styles/compiled/home.css?random_id={{ random_id }}">
+{% endblock %}
+
+{% block content %}
+<div class="panel white" id="startup-block">
+    <img src="/images/homepage/startup_illustration@Genshin Impact Raiden Shogun.jpg" id="startup-illustration">
+
+    <div class="value" id="startup-title">
+        Brave Nine Help
+    </div>
+</div>
+
+<div class="panel centered white">
+    <div class="value p-3">
+        <div class="card">
+            <div class="text">
+                <div class="title">Welcome</div>
+
+                <div class="description">
+                    Here you will find tools that will ease your playtime during exploration of Brave Nine. I've
+                    prepared such things as rune calculator or mercenary equipment optimizition tool. Feel free to use
+                    and explore!
+                </div>
+            </div>
+
+            <div class="illustration">
+                <img src="/images/homepage/illustration01@NieR_Replicant Protagonists.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel centered gray">
+    <div class="value p-3">
+        <div class="card">
+            <div class="illustration">
+                <img src="/images/homepage/illustration02@Elden Ring Malenia.webp">
+            </div>
+
+            <div class="text">
+                <div class="title">Runes</div>
+
+                <div class="description">
+                    If you want to know what value would a rune have at specific level, but you don't want to waste
+                    resources on actually upgrading rune, then use my rune calculator. They are both available for
+                    <a href="{{ path('rune_simulation') }}" class="link">regular</a> and
+                    <a href="{{ path('mythic_rune_simulation') }}" class="link">mythic</a> runes.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel centered black">
+    <div class="value p-3">
+        <div class="card">
+            <div class="text">
+                <div class="title">Formations</div>
+
+                <div class="description">
+                    In case you have problems with coming up with an idea for a formation for a particular boss fight
+                    you always can check saved formations. For example for
+                    <a href="{{ path('guild_raids_formations') }}" class="link">guild raids</a> or
+                    <a href="{{ path('world_bosses_formations') }}" class="link">world bosses</a>. Search and you also can find formations for
+                    Gate of Chaos and Campaign.
+                </div>
+            </div>
+
+            <div class="illustration">
+                <img src="/images/homepage/illustration03@Elden Ring Radagon of the Golden Order.avif">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel centered white">
+    <div class="value jc-center p-3">
+        <img src="/images/homepage/illustration04@Dark Souls III Darkeater Midir.jpg">
+    </div>
+</div>
+{% endblock %}

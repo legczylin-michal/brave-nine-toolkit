@@ -1,0 +1,39 @@
+@import 'button.scss';
+@import 'menu.scss';
+@import 'card.scss';
+@import 'panel.scss';
+@import 'link.scss';
+@import 'table.scss';
+@import 'form.scss';
+
+.d-flex {
+    display: flex;
+}
+
+.fd-column {
+    flex-direction: column;
+}
+
+.jc-center {
+    justify-content: center;
+}
+
+.jc-space-evenly {
+    justify-content: space-evenly;
+}
+
+.w-fit-content {
+    width: fit-content;
+}
+
+.p-1 {
+    padding: 1rem;
+}
+
+.p-2 {
+    padding: 2rem;
+}
+
+.p-3 {
+    padding: 3rem;
+}

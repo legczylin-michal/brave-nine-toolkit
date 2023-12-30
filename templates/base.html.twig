@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}{% endblock %} | Brave Nine Help</title>
+
+    <link rel="icon" type="image/png" href="/images/logo.png">
+
+    <link rel="stylesheet" type="text/css" href="/frameworks/unicorn/unicorn.css?random_id={{ random_id }}">
+    <link rel="stylesheet" type="text/css" href="/styles/compiled/base.css?random_id={{ random_id }}">
+    <link rel="stylesheet" type="text/css" href="/fonts/Merriweather/Merriweather.css?random_id={{ random_id }}">
+    <link rel="stylesheet" type="text/css" href="/fonts/Roboto/Roboto.css?random_id={{ random_id }}">
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+    <div id="root">
+        <div id="header">
+            <div class="panel centered">
+                <div class="value">
+                    <div class="menu dark">
+                        <div class="m-item">
+                            <a href="{{ path('home_page') }}" class="m-i-name">Home</a>
+                        </div>
+
+                        <div class="m-item">
+                            <a href="{{ path('optimize_mercenary') }}" class="m-i-name">Optimize</a>
+                        </div>
+
+                        <div class="m-item">
+                            <a href="{{ path('simulation') }}" class="m-i-name">Simulate</a>
+
+                            <div class="m-i-dropdown">
+                                <a href="{{ path('rune_simulation') }}" class="m-i-d-item">Rune</a>
+                                <a href="{{ path('mythic_rune_simulation') }}" class="m-i-d-item">Mythic Rune</a>
+                                <a href="{{ path('soul_gear_summon_simulation') }}" class="m-i-d-item">Soul Gear
+                                    Summon</a>
+                            </div>
+                        </div>
+
+                        <div class="m-item">
+                            <a href="{{ path('build_tools') }}" class="m-i-name">Build</a>
+
+                            <div class="m-i-dropdown">
+                                <a href="{{ path('atk_build') }}" class="m-i-d-item">ATK</a>
+                                <a href="{{ path('hp_build') }}" class="m-i-d-item">HP</a>
+                                <a href="{{ path('other_build') }}" class="m-i-d-item">Other stats</a>
+                                <a href="{{ path('saved_builds') }}" class="m-i-d-item">Saved builds</a>
+                            </div>
+                        </div>
+
+                        <div class="m-item">
+                            <a href="{{ path('formations') }}" class="m-i-name">Formations</a>
+
+                            <div class="m-i-dropdown">
+                                <a href="{{ path('world_bosses_formations') }}" class="m-i-d-item">World Bosses</a>
+                                <a href="{{ path('guild_raids_formations') }}" class="m-i-d-item">Guild Raid</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+
+        <div id="footer">&copy; Michail Legczylin. All rights reserved.</div>
+    </div>
+
+    <script src="/frameworks/jquery/jquery-3.7.1.js?random_id={{ random_id }}"></script>
+    <script src="/frameworks/unicorn/unicorn.js?random_id={{ random_id }}"></script>
+    <script src="/scripts/base.js?random_id={{ random_id }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
